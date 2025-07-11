@@ -1,3 +1,4 @@
+
 import { cn } from "@/lib/utils";
 import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -36,15 +37,15 @@ export const Navbar = () => {
           href="#hero"
         >
           <img
-            src="/logo1.png"
+            src="/logo1.png" 
             alt="Manish Kumar Portfolio Logo"
             className="h-16 w-auto rounded-full" 
-            onError={(e) => { e.target.onerror = null; e.target.src = "https://placehold.co/64x64/cccccc/333333?text=Logo"; }}
+            onError={(e) => { e.target.onerror = null; e.target.src = "https://placehold.co/64x64/cccccc/333333?text=Logo"; }} // Fallback image adjusted to match new size
           />
         </a>
 
-        <div className="hidden md:flex space-x-8">
-          {navItems.map((item, index) => ( 
+        <div className="hidden md:flex space-x-8 lg:space-x-12 pr-16"> 
+          {navItems.map((item, index) => (
             <a
               key={index}
               href={item.href}
@@ -73,7 +74,7 @@ export const Navbar = () => {
           )}
         >
           <div className="flex flex-col space-y-8 text-xl">
-            {navItems.map((item, index) => ( 
+            {navItems.map((item, index) => (
               <a
                 key={index}
                 href={item.href}
@@ -89,4 +90,3 @@ export const Navbar = () => {
     </nav>
   );
 };
-
