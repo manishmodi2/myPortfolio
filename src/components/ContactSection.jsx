@@ -98,7 +98,7 @@ export const ContactSection = () => {
                   <Mail className="h-6 w-6 text-primary" />{" "}
                 </div>
                 <div>
-                  <h4 className="font-medium mx-32"> Email</h4>
+                  <h4 className="font-medium"> Email</h4>
                   <a
                     href="mailto:manishkumarmodi02@gmail.com"
                     className="text-muted-foreground hover:text-primary transition-colors"
@@ -112,7 +112,7 @@ export const ContactSection = () => {
                   <Phone className="h-6 w-6 text-primary" />{" "}
                 </div>
                 <div>
-                  <h4 className="font-medium flex-center mx-32"> Phone</h4>
+                  <h4 className="font-medium "> Phone</h4>
                   <a
                     href="tel:+919162387366"
                     className="text-muted-foreground hover:text-primary transition-colors"
@@ -126,7 +126,7 @@ export const ContactSection = () => {
                   <MapPin className="h-6 w-6 text-primary" />{" "}
                 </div>
                 <div>
-                  <h4 className="font-medium mx-32"> Location</h4>
+                  <h4 className="font-medium"> Location</h4>
                   <span className="text-muted-foreground">
                     Bhopal, MP, India
                   </span>

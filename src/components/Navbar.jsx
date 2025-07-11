@@ -1,7 +1,8 @@
 
 import { cn } from "@/lib/utils";
 import { Menu, X } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
+import { ThemeToggle } from "./ThemeToggle"; 
 
 const navItems = [
   { name: "Home", href: "#hero" },
@@ -15,71 +16,95 @@ export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
-    };
+  const handleScroll = useCallback(() => {
+    setIsScrolled(window.scrollY > 10);
+  }, []);
 
+  useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
+  }, [handleScroll]);
+
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isMenuOpen]);
+
+  const handleNavLinkClick = useCallback(() => {
+    setIsMenuOpen(false);
   }, []);
 
   return (
     <nav
       className={cn(
         "fixed w-full z-40 transition-all duration-300",
-        isScrolled ? "py-3 bg-background/80 backdrop-blur-md shadow-xs" : "py-5"
+        isScrolled ? "py-3" : "py-5"
       )}
     >
-      <div className="container flex items-center justify-between">
+      <div className="container mx-auto px-4 flex items-center justify-between">
         <a
-          className="text-xl font-bold text-primary flex items-center"
+          className="text-xl font-bold text-primary flex items-center shrink-0"
           href="#hero"
+          aria-label="Home"
         >
           <img
-            src="/logo1.png" 
+            src="/logo1.png"
             alt="Manish Kumar Portfolio Logo"
-            className="h-16 w-auto rounded-full" 
-            onError={(e) => { e.target.onerror = null; e.target.src = "https://placehold.co/64x64/cccccc/333333?text=Logo"; }} // Fallback image adjusted to match new size
+            className="h-14 md:h-16 w-auto rounded-full object-cover"
+            onError={(e) => {
+              e.target.onerror = null;
+              e.target.src = "https://placehold.co/60x60/cccccc/333333?text=Logo";
+            }}
           />
         </a>
 
-        <div className="hidden md:flex space-x-8 lg:space-x-12 pr-16"> 
-          {navItems.map((item, index) => (
+        <div className="hidden md:flex items-center space-x-6 lg:space-x-10">
+          {navItems.map((item) => (
             <a
-              key={index}
+              key={item.name}
               href={item.href}
-              className="text-foreground/80 hover:text-primary transition-colors duration-300"
+              className="text-foreground/80 hover:text-primary transition-colors duration-300 text-base lg:text-lg font-medium"
             >
               {item.name}
             </a>
           ))}
+          <ThemeToggle />
         </div>
 
-        <button
-          onClick={() => setIsMenuOpen((prev) => !prev)}
-          className="md:hidden p-2 text-foreground z-50"
-          aria-label={isMenuOpen ? "Close Menu" : "Open Menu"}
-        >
-          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}{" "}
-        </button>
+        <div className="md:hidden flex items-center space-x-4">
+            <ThemeToggle />
+            <button
+                onClick={() => setIsMenuOpen((prev) => !prev)}
+                className="p-2 text-foreground z-50 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                aria-label={isMenuOpen ? "Close Menu" : "Open Menu"}
+            >
+                {isMenuOpen ? <X size={28} /> : <Menu size={28} />}{" "}
+            </button>
+        </div>
+
 
         <div
           className={cn(
-            "fixed inset-0 bg-background/95 backdrop-blur-md z-40 flex flex-col items-center justify-center",
-            "transition-all duration-300 md:hidden",
+            "fixed inset-0 bg-background/95 backdrop-blur-lg z-40 flex flex-col items-center justify-center",
+            "transition-all duration-300 ease-in-out md:hidden",
             isMenuOpen
-              ? "opacity-100 pointer-events-auto"
-              : "opacity-0 pointer-events-none"
+              ? "opacity-100 translate-x-0"
+              : "opacity-0 translate-x-full pointer-events-none"
           )}
         >
-          <div className="flex flex-col space-y-8 text-xl">
-            {navItems.map((item, index) => (
+          <div className="flex flex-col space-y-8 text-2xl font-semibold">
+            {navItems.map((item) => (
               <a
-                key={index}
+                key={item.name}
                 href={item.href}
-                className="text-foreground/80 hover:text-primary transition-colors duration-300"
-                onClick={() => setIsMenuOpen(false)}
+                className="text-foreground hover:text-primary transition-colors duration-300 text-center"
+                onClick={handleNavLinkClick}
               >
                 {item.name}
               </a>
