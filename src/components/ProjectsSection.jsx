@@ -8,8 +8,8 @@ const projects = [
     description: "A beautiful landing page app using React and Tailwind.",
     image: "/projects/project.png",
     tags: ["React", "TailwindCSS"],
-    demoUrl: "#",
-    githubUrl: "#",
+    demoUrl: "https://recipebooks.vercel.app/",
+    githubUrl: "https://github.com/manishmodi2/BiteBank",
   },
  
 ];
